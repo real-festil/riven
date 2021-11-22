@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "845738475476",
+    "firebase_url": "https://datingbuyerssellers-default-rtdb.firebaseio.com",
+    "project_id": "datingbuyerssellers",
+    "storage_bucket": "datingbuyerssellers.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:845738475476:android:443ca8db84a3e4bda1a041",
+        "android_client_info": {
+          "package_name": "com.datingBuyersSellers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "845738475476-5g7svachs3la0b61knlj7bpke267vdcd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADzaGOf0x5T7PRncGb7yxMHwEM79arEhQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "845738475476-5g7svachs3la0b61knlj7bpke267vdcd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "845738475476-6heks5rlat27g776u4hvaoc8062edgfs.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.datingBuyersSellers"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
