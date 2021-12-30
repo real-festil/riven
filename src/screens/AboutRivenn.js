@@ -118,7 +118,7 @@ const AboutRivenn = props => {
       )}
       <TouchableOpacity style={styles.submit} onPress={() => onSubmit()}>
         <Text style={styles.textStyle}>
-          I'ready to have Rivenn help me find a home
+          I’m ready to have Rivenn help me find a home
         </Text>
       </TouchableOpacity>
       {/*<Button*/}

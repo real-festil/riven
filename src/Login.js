@@ -28,6 +28,7 @@ export default class Login extends Component {
       password: '',
       isLoading: false,
       isLogged: false,
+      isForgotPassword: false,
     };
     this.onAuthStateChanged = this.onAuthStateChanged.bind(this);
   }
@@ -105,6 +106,21 @@ export default class Login extends Component {
     }
   };
 
+  forgotPassword = () => {
+    if (this.state.email === '' && this.state.password === '') {
+      Alert.alert('Enter details to signin!');
+    } else {
+      auth()
+        .sendPasswordResetEmail(this.state.email)
+        .then(() => {
+          Alert.alert('Please check your email...');
+        })
+        .catch(error => {
+          Alert.alert('Something went wrong, try again');
+        });
+    }
+  };
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -115,36 +131,79 @@ export default class Login extends Component {
     }
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Buyers & Sellers</Text>
-        <TextInput
-          style={styles.inputStyle}
-          placeholder="Email"
-          value={this.state.email}
-          onChangeText={val => this.updateInputVal(val, 'email')}
-        />
-        <TextInput
-          style={styles.inputStyle}
-          placeholder="Password"
-          value={this.state.password}
-          onChangeText={val => this.updateInputVal(val, 'password')}
-          maxLength={15}
-          secureTextEntry={true}
-        />
+        {this.state.isForgotPassword ? (
+          <React.Fragment>
+            <Text style={styles.title}>Buyers & Sellers</Text>
+            <TextInput
+              style={[styles.inputStyle]}
+              placeholder="Email"
+              value={this.state.email}
+              onChangeText={val => this.updateInputVal(val, 'email')}
+            />
 
-        <TouchableOpacity
-          style={[
-            styles.loginBtn,
-            {backgroundColor: '#3eadac', padding: 10, borderColor: '#3eadac'},
-          ]}
-          onPress={() => this.userLogin()}>
-          <Text style={styles.btnText}>Login</Text>
-        </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.loginBtn,
+                {
+                  backgroundColor: '#3eadac',
+                  padding: 10,
+                  borderColor: '#3eadac',
+                },
+              ]}
+              onPress={() => this.forgotPassword()}>
+              <Text style={styles.btnText}>Send verification email</Text>
+            </TouchableOpacity>
 
-        <Text
-          style={styles.loginText}
-          onPress={() => this.props.navigation.navigate('Dashboard')}>
-          Don't have account? Click here to signup
-        </Text>
+            <Text
+              style={styles.loginText}
+              onPress={() => this.setState({isForgotPassword: false})}>
+              Login
+            </Text>
+          </React.Fragment>
+        ) : (
+          <React.Fragment>
+            <Text style={styles.title}>Buyers & Sellers</Text>
+            <TextInput
+              style={styles.inputStyle}
+              placeholder="Email"
+              value={this.state.email}
+              onChangeText={val => this.updateInputVal(val, 'email')}
+            />
+            <TextInput
+              style={styles.inputStyle}
+              placeholder="Password"
+              value={this.state.password}
+              onChangeText={val => this.updateInputVal(val, 'password')}
+              maxLength={15}
+              secureTextEntry={true}
+            />
+
+            <TouchableOpacity
+              style={[
+                styles.loginBtn,
+                {
+                  backgroundColor: '#3eadac',
+                  padding: 10,
+                  borderColor: '#3eadac',
+                },
+              ]}
+              onPress={() => this.userLogin()}>
+              <Text style={styles.btnText}>Login</Text>
+            </TouchableOpacity>
+
+            <Text
+              style={styles.loginText}
+              onPress={() => this.setState({isForgotPassword: true})}>
+              Forgot password?
+            </Text>
+
+            <Text
+              style={styles.loginText}
+              onPress={() => this.props.navigation.navigate('Dashboard')}>
+              Don't have account? Click here to signup
+            </Text>
+          </React.Fragment>
+        )}
       </View>
     );
   }

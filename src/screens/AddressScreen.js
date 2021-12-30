@@ -1,23 +1,26 @@
 import React from 'react';
-import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import {Platform, StyleSheet, Text, View, Button, Image} from "react-native";
-import {TouchableOpacity} from "react-native-gesture-handler";
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
+import {Platform, StyleSheet, Text, View, Button, Image} from 'react-native';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const AddressScreen = (props) => {
+const AddressScreen = props => {
   return (
-
     <View style={styles.container}>
       <TouchableOpacity
-        style={{backgroundColor: 'transparent',marginBottom: 25, }}
+        style={{backgroundColor: 'transparent', marginBottom: 25}}
         onPress={() => {
           props.navigation.goBack();
-        }}
-      >
-        <Image source={require('../assets/back.png')} width={35} height={20} style={{width: 35, height: 20}} />
+        }}>
+        <Image
+          source={require('../assets/back.png')}
+          width={35}
+          height={20}
+          style={{width: 35, height: 20}}
+        />
       </TouchableOpacity>
       <Text style={styles.title}>Select Address</Text>
       <GooglePlacesAutocomplete
-        placeholder='Enter Location'
+        placeholder="Enter Location"
         minLength={2}
         autoFocus={true}
         returnKeyType={'default'}
@@ -40,11 +43,11 @@ const AddressScreen = (props) => {
         }}
         onPress={(data, details = null) => {
           console.log(data);
-          props.route.params.setAddress(data.description)
-          props.route.params.setCoordinate(details.geometry.location)
-          props.route.params.setPlaceId(data.place_id)
+          props.route.params.setAddress(data.description);
+          props.route.params.setCoordinate(details.geometry.location);
+          props.route.params.setPlaceId(data.place_id);
 
-          props.navigation.goBack()
+          props.navigation.goBack();
         }}
         query={{
           key: 'AIzaSyBT-kPnfNowPW7n3tdTXhVwgZtLW7cFNeE',
@@ -57,16 +60,15 @@ const AddressScreen = (props) => {
 
 export default AddressScreen;
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    display: "flex",
+    display: 'flex',
     paddingTop: Platform.OS === 'ios' ? 80 : 30,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     padding: 20,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   title: {
     width: '100%',
@@ -75,4 +77,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#000',
   },
-})
+});
