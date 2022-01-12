@@ -84,7 +84,9 @@ const SellerRegister = props => {
       password === '' ||
       firstName === '' ||
       lastName === '' ||
-      mobile === ''
+      mobile === '' ||
+      mobile.length < 5 ||
+      password.length < 5
     ) {
       Alert.alert('Enter details to signup!');
     } else {
@@ -206,6 +208,7 @@ const SellerRegister = props => {
             <TextInput
               style={styles.input}
               autoCompleteType={'email'}
+              keyboardType="email-address"
               onChangeText={value => validateEmail(value)}
               value={email}
             />
@@ -222,6 +225,13 @@ const SellerRegister = props => {
               value={mobile}
             />
           </View>
+          <View>
+            {mobile !== '' && mobile.length < 5 && (
+              <Text style={styles.errorText}>
+                Phone should be at least 5 digits long
+              </Text>
+            )}
+          </View>
           {!props.route.params.profileData && (
             <View style={styles.inputItem}>
               <Text style={styles.inputTitle}>Password: </Text>
@@ -234,6 +244,13 @@ const SellerRegister = props => {
               />
             </View>
           )}
+          <View>
+            {password !== '' && password.length < 6 && (
+              <Text style={styles.errorText}>
+                Phone should be at least 6 symbols long
+              </Text>
+            )}
+          </View>
           {!props.route.params.profileData && (
             <View style={styles.radioItem}>
               <Text style={styles.radioTitle}>More information </Text>
@@ -310,7 +327,7 @@ const SellerRegister = props => {
               </View>
               <View style={styles.radioWrapper}>
                 <Text style={styles.radioSubTitle}>
-                  How much quick you want to sell your property?
+                  How quickly do you want to sell your property?
                 </Text>
                 <RadioForm style={styles.radioForm}>
                   {how_quick_props.map((obj, i) => {

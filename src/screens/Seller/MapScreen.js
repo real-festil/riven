@@ -134,8 +134,8 @@ const MapScreen = props => {
         styles={{
           container: {
             position: 'absolute',
-            left: Platform.OS == 'ios' ? '5%' : 20,
-            top: Platform.OS == 'ios' ? 60 : 10,
+            left: Platform.OS == 'ios' ? 30 : 20,
+            top: Platform.OS == 'ios' ? 20 : 10,
             zIndex: 102,
             width: '90%',
             height: searchHeight,
@@ -215,27 +215,35 @@ const MapScreen = props => {
             latitudeDelta: 0.5,
             longitudeDelta: 0.5,
           }}>
-          {markerList.flat().map((marker, index) => {
-            if (!marker.coordinate) {
-              return null;
-            }
-            return (
-              <Marker
-                key={index}
-                style={{height: 40, width: 30}}
-                // image={{uri: 'map_pin'}}
-                coordinate={{
-                  latitude: marker.coordinate.lat || 40.73061,
-                  longitude: marker.coordinate.lng || -73.935242,
-                }}
-                title={marker.address}>
-                <Image
-                  source={require('../../assets/buyer-marker.png')}
-                  style={{width: 20, height: 30, resizeMode: 'cover'}}
-                />
-              </Marker>
-            );
-          })}
+          {markerList
+            .flat()
+            .filter(marker => marker.status !== 'rejected')
+            .map((marker, index) => {
+              if (!marker.coordinate) {
+                return null;
+              }
+              return (
+                <Marker
+                  key={index}
+                  // style={{height: 40, width: 30}}
+                  // image={{uri: 'map_pin'}}
+                  coordinate={{
+                    latitude: marker.coordinate.lat || 40.73061,
+                    longitude: marker.coordinate.lng || -73.935242,
+                  }}
+                  title={marker.address}>
+                  <Image
+                    source={
+                      marker.status === 'pending'
+                        ? require('../../assets/seller-marker.png')
+                        : require('../../assets/buyer-marker.png')
+                    }
+                    style={{width: 20, height: 30}}
+                    resizeMode="contain"
+                  />
+                </Marker>
+              );
+            })}
         </MapView>
       )}
     </View>
@@ -274,7 +282,7 @@ const styles = StyleSheet.create({
   addAddress: {
     position: 'absolute',
     right: Platform.OS == 'ios' ? 30 : 20,
-    top: Platform.OS == 'ios' ? 120 : 70,
+    top: Platform.OS == 'ios' ? 90 : 70,
     zIndex: 1,
     width: 50,
     height: 50,
@@ -286,14 +294,13 @@ const styles = StyleSheet.create({
   addAddressMOde: {
     position: 'absolute',
     right: Platform.OS == 'ios' ? 30 : 20,
-    top: Platform.OS == 'ios' ? 120 : 70,
+    top: Platform.OS == 'ios' ? 90 : 70,
     zIndex: 1,
     width: 50,
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
-
     borderRadius: 100,
   },
   map: {

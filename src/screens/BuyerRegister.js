@@ -77,7 +77,9 @@ const BuyerRegister = props => {
       password === '' ||
       firstName === '' ||
       lastName === '' ||
-      mobile === ''
+      mobile === '' ||
+      mobile.length < 5 ||
+      password.length < 5
     ) {
       Alert.alert('All fields are required!');
     } else {
@@ -199,6 +201,7 @@ const BuyerRegister = props => {
               style={styles.input}
               autoCompleteType={'email'}
               onChangeText={value => validateEmail(value)}
+              keyboardType="email-address"
               value={email}
             />
           </View>
@@ -214,6 +217,13 @@ const BuyerRegister = props => {
               value={mobile}
             />
           </View>
+          <View>
+            {mobile !== '' && mobile.length < 5 && (
+              <Text style={styles.errorText}>
+                Phone should be at least 5 digits long
+              </Text>
+            )}
+          </View>
           {!props.route.params.profileData && (
             <View style={styles.inputItem}>
               <Text style={styles.inputTitle}>Password: </Text>
@@ -226,6 +236,13 @@ const BuyerRegister = props => {
               />
             </View>
           )}
+          <View>
+            {password !== '' && password.length < 6 && (
+              <Text style={styles.errorText}>
+                Phone should be at least 6 symbols long
+              </Text>
+            )}
+          </View>
 
           <View style={styles.radioItem}>
             <Text style={styles.radioTitle}>Financing information </Text>

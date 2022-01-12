@@ -1,4 +1,8 @@
 apply plugin: "com.android.application"
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.firebase-perf'
+apply plugin: 'com.google.firebase.crashlytics'
 
 import com.android.build.OutputFile
 
@@ -134,8 +138,8 @@ android {
         applicationId "com.datingBuyersSellers"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 9
-        versionName "1.0"
+        versionCode 31
+        versionName "1.0.14"
         missingDimensionStrategy 'store', 'play'
     }
     splits {

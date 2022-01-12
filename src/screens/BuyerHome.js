@@ -25,6 +25,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DocumentPicker from 'react-native-document-picker';
 import storage from '@react-native-firebase/storage';
 import RNFetchBlob from 'rn-fetch-blob';
+import analytics from '@react-native-firebase/analytics';
 
 const {width, height} = Dimensions.get('window');
 
@@ -178,6 +179,15 @@ const BuyerHome = props => {
       await uploadTask;
       console.log('uploadTask', uploadTask);
     }
+    await analytics().logEvent('propertyUpdate', {
+      userId,
+      town: town,
+      neighborhood: neighborhood,
+      bedrooms: [bedroomsMin, bedroomsMax],
+      bathrooms: [bathroomsMin, bathroomsMax],
+      homeSize: [minSize, maxSize],
+      homePrice: [minPrice, maxPrice],
+    });
   };
   console.log(props.route);
   return (

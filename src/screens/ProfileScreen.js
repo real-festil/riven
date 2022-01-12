@@ -166,7 +166,7 @@ export default class ProfileScreen extends Component {
                   <Text style={[styles.subTitle, {}]}>Bedrooms</Text>
                   <View style={{flexDirection: 'row'}}>
                     <Text style={[styles.textStyle, {width: '50%'}]}>
-                      MIn: {item.bedrooms[0]}
+                      Min: {item.bedrooms[0]}
                     </Text>
                     <Text
                       style={[
@@ -184,7 +184,7 @@ export default class ProfileScreen extends Component {
                   <Text style={[styles.subTitle, {}]}>Home Price</Text>
                   <View style={{flexDirection: 'row'}}>
                     <Text style={[styles.textStyle, {width: '50%'}]}>
-                      MIn: {item.homePrice[0]} $
+                      Min: {item.homePrice[0]} $
                     </Text>
                     <Text
                       style={[
@@ -202,7 +202,7 @@ export default class ProfileScreen extends Component {
                   <Text style={[styles.subTitle, {}]}>Home Size</Text>
                   <View style={{flexDirection: 'row'}}>
                     <Text style={[styles.textStyle, {width: '50%'}]}>
-                      MIn: {item.homeSize[0]} sq.ft
+                      Min: {item.homeSize[0]} sq.ft
                     </Text>
                     <Text
                       style={[
@@ -367,7 +367,7 @@ export default class ProfileScreen extends Component {
             onPress={() => this.signOut()}>
             <Text style={styles.textLogout}>Logout</Text>
           </TouchableOpacity>
-          <Text>Version: 1.0.14 (build 1)</Text>
+          <Text>Version: 1.0.16</Text>
         </ScrollView>
       </View>
     );
