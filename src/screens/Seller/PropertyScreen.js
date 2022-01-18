@@ -214,10 +214,10 @@ const PropertyScreen = props => {
                     {item.price}
                   </Text>
                 </View>
-                <View
+              </View>
+              <View
                   style={{
                     flexDirection: 'row',
-                    justifyContent: 'space-between',
                     alignItems: 'center',
                   }}>
                   <Text
@@ -229,7 +229,6 @@ const PropertyScreen = props => {
                     {item.timeFrame}
                   </Text>
                 </View>
-              </View>
             </TouchableOpacity>
           );
         })}

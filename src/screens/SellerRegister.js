@@ -27,7 +27,7 @@ const {width, height} = Dimensions.get('window');
 const radio_props = [
   {label: 'Yes', value: 'Yes'},
   {label: 'No', value: 'No'},
-  {label: "I don't have a mortgage", value: "I don't have a mortgage"},
+  {label: "I don't have a mortgage12332", value: "I don't have a mortgage"},
 ];
 const primary_props = [
   {label: 'Yes', value: 'Yes'},
@@ -276,7 +276,7 @@ const SellerRegister = props => {
                           onPress={value => setRadioValue(value)}
                           buttonInnerColor={'#3eadac'}
                           buttonOuterColor={'#3eadac'}
-                          buttonSize={15}
+                          buttonSize={12}
                           buttonStyle={{}}
                         />
                         <RadioButtonLabel
@@ -284,7 +284,7 @@ const SellerRegister = props => {
                           index={i}
                           labelHorizontal={true}
                           onPress={value => setRadioValue(value)}
-                          labelStyle={{fontSize: 14, color: '#000'}}
+                          labelStyle={{fontSize: 13, color: '#000'}}
                         />
                       </RadioButton>
                     );
@@ -310,7 +310,7 @@ const SellerRegister = props => {
                           onPress={value => setPrimaryValue(value)}
                           buttonInnerColor={'#3eadac'}
                           buttonOuterColor={'#3eadac'}
-                          buttonSize={15}
+                          buttonSize={12}
                           buttonStyle={{}}
                         />
                         <RadioButtonLabel
@@ -318,7 +318,7 @@ const SellerRegister = props => {
                           index={i}
                           labelHorizontal={true}
                           onPress={value => setRadioValue(value)}
-                          labelStyle={{fontSize: 14, color: '#000'}}
+                          labelStyle={{fontSize: 13, color: '#000'}}
                         />
                       </RadioButton>
                     );
@@ -344,7 +344,7 @@ const SellerRegister = props => {
                           onPress={value => setHowQuick(value)}
                           buttonInnerColor={'#3eadac'}
                           buttonOuterColor={'#3eadac'}
-                          buttonSize={15}
+                          buttonSize={12}
                           buttonStyle={{}}
                         />
                         <RadioButtonLabel
@@ -352,7 +352,7 @@ const SellerRegister = props => {
                           index={i}
                           labelHorizontal={true}
                           onPress={value => setHowQuick(value)}
-                          labelStyle={{fontSize: 14, color: '#000'}}
+                          labelStyle={{fontSize: 13, color: '#000'}}
                         />
                       </RadioButton>
                     );

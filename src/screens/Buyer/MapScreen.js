@@ -55,8 +55,11 @@ const MapScreen = props => {
   const [searchRegion, setSearchRegion] = useState(null);
   const [addressModal, setAddressModal] = useState(false);
   const [selectedAddresses, setSelectedAddresses] = useState([]);
+  const [userEmail, setUserEmail] = useState('');
 
   const ref = useRef();
+
+  console.log('userData', userData);
 
   useEffect(() => {
     const isFocused = ref.current?.isFocused();
@@ -127,6 +130,7 @@ const MapScreen = props => {
 
   const onAuthStateChanged = user => {
     if (user) {
+      // setUserEmail(user.email);
       setUserId(user.uid);
     }
     if (!user) {
@@ -193,13 +197,18 @@ const MapScreen = props => {
   };
 
   const sendEmail = () => {
+    console.log('userEmail', userEmail);
     console.log('fetch here');
     let body = {
-      personalizations: [
-        {to: [{email: 'romagladyshev@gmail.com'}], subject: 'Hello, World!'},
+      personalizations: [{to: [{email: userEmail}], subject: 'Rivenn'}],
+      from: {email: 'rivennsendgrid@gmail.com'},
+      content: [
+        {
+          type: 'text/html',
+          value:
+            '<div><img src="https://play-lh.googleusercontent.com/VIvVZzgEBzQl1RGTqu7cO2AfwvfsxAN7zqV9xdDG8T5iyofYMXCX7ybO8JWGpFroCFU=s180-rw" /><p>Great news</p><p>Somebody interested in your property.<br />Wait for further communication from Rivenn.</p></div>',
+        },
       ],
-      from: {email: 'from_address@example.com'},
-      content: [{type: 'text/plain', value: 'Hello, World!'}],
     };
 
     console.log('body', JSON.stringify(body));
@@ -207,11 +216,10 @@ const MapScreen = props => {
       method: 'POST',
       headers: {
         Authorization:
-          'Bearer ' +
-          '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',
+          'Bearer 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',
         'Content-Type': 'application/json',
       },
-      body: JSON.parse(JSON.stringify(body)),
+      body: JSON.stringify(body),
     })
       .then(response => {
         console.log('response', response);
@@ -228,10 +236,22 @@ const MapScreen = props => {
       setAlreadyInterested(false);
     }
 
+    if (interestedData.sellerId) {
+      database()
+        .ref('users/' + interestedData.sellerId)
+        .once('value')
+        .then(snap => {
+          if (snap.val() && snap.val().email) {
+            setUserEmail(snap.val().email);
+          }
+        });
+    }
+
     setInterested(true);
     setInterestedData(marker);
     setInterestedKey(markerKeys.flat()[index]);
   };
+
   const saveInterested = () => {
     console.log('here');
     sendEmail();
@@ -411,107 +431,45 @@ const MapScreen = props => {
               }}>
               Available properties {'\n'} in this area:
             </Text>
-            <View style={{marginBottom: 20}}>
-              {selectedAddresses.map((a, i) => (
-                <TouchableOpacity
-                  key={i}
-                  onPress={() => {
-                    onInterested(a, i);
-                    setAddressModal(false);
-                  }}
-                  style={{
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    width: 240,
-                    marginBottom: 10,
-                  }}>
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      color: '#0099cc',
-                      textDecorationLine: 'underline',
-                    }}>
-                    {a.address.length > 15
-                      ? a.address.slice(0, 13) + '...'
-                      : a.address}
-                  </Text>
-                  <Text style={{fontSize: 18, color: '#0099cc'}}>
-                    ${a.price}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-            {/* <View
-                style={{
-                  flexDirection: 'row',
-                  width: '80%',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}>
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                  <Text
-                    style={{fontSize: 18, marginTop: 15, fontWeight: '600'}}>
-                    Price
-                  </Text>
-                  <Text style={styles.modalText}>{interestedData.price} $</Text>
-                </View>
-                <View style={{justifyContent: 'center', alignItems: 'center'}}>
-                  <Text
-                    style={{fontSize: 18, marginTop: 15, fontWeight: '600'}}>
-                    Time Frame
-                  </Text>
-                  <Text style={styles.modalText}>
-                    {interestedData.timeFrame} D
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  marginTop: 20,
-                }}>
-                {alreadyInterested ? (
-                  <View
-                    style={{
-                      width: '100%',
-                      borderTopWidth: 1,
-                      padding: 10,
-                      alignItems: 'center',
-                      borderColor: '#3eadac',
-                    }}>
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        textTransform: 'uppercase',
-                        fontWeight: '600',
-                        color: '#3eadac',
-                      }}>
-                      You’re already interested in it
-                    </Text>
-                  </View>
-                ) : (
+            <ScrollView
+              contentContainerStyle={{
+                marginBottom: 20,
+                width: '100%',
+                paddingHorizontal: 10,
+              }}>
+              <View>
+                {selectedAddresses.map((a, i) => (
                   <TouchableOpacity
-                    style={{
-                      width: '100%',
-                      borderTopWidth: 1,
-                      padding: 10,
-                      alignItems: 'center',
-                      borderColor: '#3eadac',
+                    key={i}
+                    onPress={() => {
+                      onInterested(a, i);
+                      setAddressModal(false);
                     }}
-                    onPress={() => saveInterested()}>
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      width: '100%',
+                      marginTop: 5,
+                      borderWidth: 2,
+                      borderRadius: 10,
+                      marginBottom: 10,
+                      backgroundColor: '#3eadac',
+                      padding: 5,
+                      borderColor: '#3eadac',
+                      textAlign: 'center',
+                    }}>
                     <Text
                       style={{
-                        fontSize: 15,
-                        textTransform: 'uppercase',
-                        fontWeight: '600',
-                        color: '#3eadac',
+                        fontSize: 18,
+                        color: '#fff',
+                        textAlign: 'center',
                       }}>
-                      I’m interested in it
+                      ${a.price}
                     </Text>
                   </TouchableOpacity>
-                )}
-              </View> */}
+                ))}
+              </View>
+            </ScrollView>
           </View>
         </View>
       </Modal>
@@ -539,8 +497,8 @@ const MapScreen = props => {
         styles={{
           container: {
             position: 'absolute',
-            left: Platform.OS == 'ios' ? 30 : 20,
-            top: Platform.OS == 'ios' ? 20 : 10,
+            left: Platform.OS == 'ios' ? '5%' : 20,
+            top: Platform.OS == 'ios' ? 35 : 10,
             zIndex: 102,
             width: '90%',
             height: searchHeight,
@@ -786,6 +744,7 @@ const MapScreen = props => {
                         textTransform: 'uppercase',
                         fontWeight: '600',
                         color: '#3eadac',
+                        textAlign: 'center',
                       }}>
                       You’re already interested in it
                     </Text>
@@ -933,7 +892,7 @@ const styles = StyleSheet.create({
     width: width - 100,
     backgroundColor: 'white',
     borderRadius: 20,
-    paddingBottom: 0,
+    paddingBottom: 10,
     paddingTop: 20,
     alignItems: 'center',
     shadowColor: '#000',
@@ -944,6 +903,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    maxHeight: '70%',
   },
   modalText: {
     fontSize: 15,

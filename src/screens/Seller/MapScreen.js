@@ -134,8 +134,8 @@ const MapScreen = props => {
         styles={{
           container: {
             position: 'absolute',
-            left: Platform.OS == 'ios' ? 30 : 20,
-            top: Platform.OS == 'ios' ? 20 : 10,
+            left: Platform.OS == 'ios' ? '5%' : 20,
+            top: Platform.OS == 'ios' ? 35 : 10,
             zIndex: 102,
             width: '90%',
             height: searchHeight,
