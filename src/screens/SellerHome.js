@@ -61,6 +61,7 @@ const SellerHome = props => {
       console.log(id, 'snapshot.val()');
       setAddress(home.address);
       setPrice(home.price);
+      setOther(home.other);
       setCoordinate(home.coordinate);
       setTimeFrame(home.timeFrame);
       setRadioValue(home.needBuy);

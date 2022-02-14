@@ -56,6 +56,7 @@ const MapScreen = props => {
   const [addressModal, setAddressModal] = useState(false);
   const [selectedAddresses, setSelectedAddresses] = useState([]);
   const [userEmail, setUserEmail] = useState('');
+  const [sendgridKey, setSendgridKey] = useState(null);
 
   const ref = useRef();
 
@@ -85,9 +86,22 @@ const MapScreen = props => {
   }, [isFocused]);
 
   useEffect(() => {
+    database()
+      .ref('apiKeys/')
+      .once('value')
+      .then(snapshot => {
+        console.log('snapshot', snapshot.key);
+        if (snapshot.val() !== null) {
+          console.log('snapshot.val(', snapshot.val());
+          setSendgridKey(snapshot.val().sendgridKey);
+        }
+      })
+      .catch(error => console.log(error, 'user Data error'));
     const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
     return subscriber; // unsubscribe on unmount
   }, []);
+
+  console.log('sendgridKey', sendgridKey);
 
   useEffect(() => {
     if (addMode) {
@@ -215,8 +229,7 @@ const MapScreen = props => {
     fetch('https://api.sendgrid.com/v3/mail/send', {
       method: 'POST',
       headers: {
-        Authorization:
-          'Bearer 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',
+        Authorization: `Bearer ${sendgridKey}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
@@ -708,7 +721,11 @@ const MapScreen = props => {
                     Time Frame
                   </Text>
                   <Text style={styles.modalText}>
-                    {interestedData.timeFrame} D
+                    {interestedData.timeFrame &&
+                      (interestedData.timeFrame.length < 12
+                        ? interestedData.timeFrame
+                        : interestedData.timeFrame.slice(0, 12) + '...')}
+                    D
                   </Text>
                 </View>
               </View>

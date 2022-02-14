@@ -27,7 +27,7 @@ const {width, height} = Dimensions.get('window');
 const radio_props = [
   {label: 'Yes', value: 'Yes'},
   {label: 'No', value: 'No'},
-  {label: "I don't have a mortgage12332", value: "I don't have a mortgage"},
+  {label: "I don't have a mortgage", value: "I don't have a mortgage"},
 ];
 const primary_props = [
   {label: 'Yes', value: 'Yes'},

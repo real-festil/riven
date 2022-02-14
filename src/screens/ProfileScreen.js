@@ -367,7 +367,7 @@ export default class ProfileScreen extends Component {
             onPress={() => this.signOut()}>
             <Text style={styles.textLogout}>Logout</Text>
           </TouchableOpacity>
-          <Text>Version: 1.0.16</Text>
+          <Text>Version: 1.0.18</Text>
         </ScrollView>
       </View>
     );
